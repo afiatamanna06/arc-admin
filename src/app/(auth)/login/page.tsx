@@ -1,43 +1,52 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import Link from "next/link"
-import { Shield, Mail, Lock, ArrowRight, AlertCircle, CheckCircle } from "lucide-react"
-import { motion } from "framer-motion"
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Link from "next/link";
+import {
+  Shield,
+  Mail,
+  Lock,
+  ArrowRight,
+  AlertCircle,
+  CheckCircle,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import ColorModeSwitch from "@/components/common/ColorModeSwitch";
 
 export default function AdminLoginPage() {
-  const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setSuccess(false)
+    e.preventDefault();
+    setError("");
+    setSuccess(false);
 
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 800))
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 800));
 
-    if (email.toLowerCase() === "admin@arc.com" && password === "1234") {
-      localStorage.setItem("admin-auth", "true")
-      setSuccess(true)
-      setTimeout(() => router.replace("/dashboard"), 600)
+    if (email.toLowerCase() === "admin@glammy.com" && password === "1234") {
+      localStorage.setItem("admin-auth", "true");
+      setSuccess(true);
+      setTimeout(() => router.replace("/dashboard"), 600);
     } else {
-      setError("INVALID_ADMIN_CREDENTIALS")
+      setError("INVALID_ADMIN_CREDENTIALS");
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Background */}
-      <div className="fixed inset-0 opacity-20">
+      <div className="absolute inset-0 opacity-20">
         <div
           className="w-full h-full"
           style={{
@@ -51,6 +60,9 @@ export default function AdminLoginPage() {
       </div>
 
       <div className="relative z-10 min-h-screen flex items-center justify-center p-6">
+        <div className="absolute top-6 right-6">
+          <ColorModeSwitch className="bg-purple-200 dark:bg-purple-500/20 p-3 cursor-pointer rounded-full text-purple-600 dark:text-white" />
+        </div>
         <motion.div
           className="w-full max-w-md relative overflow-hidden p-8"
           style={{
@@ -61,39 +73,45 @@ export default function AdminLoginPage() {
             `,
             backdropFilter: "blur(25px)",
             border: "1px solid rgba(255, 255, 255, 0.2)",
-            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.15)",
+            boxShadow:
+              "0 20px 40px rgba(0, 0, 0, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.15)",
           }}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
         >
+          <div className="flex flex-col gap-4 mb-6">
+            <Image
+              src="/icon.png"
+              alt="Logo"
+              width={500}
+              height={500}
+              className="h-12 w-32"
+            />
 
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-500/50">
-              <Shield className="h-7 w-7 text-white" />
-            </div>
-            <div>
-              <h1 className="font-mono font-bold text-xl">ADMIN_LOGIN</h1>
-              <p className="text-purple-400 font-mono text-xs">GLAMMY</p>
-            </div>
+            <h1 className="font-mono font-bold text-xl">ADMIN LOGIN</h1>
           </div>
 
           <form onSubmit={onSubmit} className="space-y-4">
             <div className="space-y-2">
-              <label className="block text-xs font-mono tracking-wider text-cyan-400">ADMIN_EMAIL</label>
+              <label className="block text-xs font-mono tracking-wider text-cyan-400">
+                ADMIN_EMAIL
+              </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <input
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
-                  placeholder="admin@nexus.com"
-                  className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-600 placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:shadow-lg focus:shadow-cyan-400/25 font-mono"
+                  placeholder="admin@abcd.com"
+                  className="w-full pl-10 pr-4 py-3 dark:bg-black/50 border border-gray-600 placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:shadow-lg focus:shadow-cyan-400/25 font-mono"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="block text-xs font-mono tracking-wider text-cyan-400">ADMIN_PASSWORD</label>
+              <label className="block text-xs font-mono tracking-wider text-cyan-400">
+                ADMIN_PASSWORD
+              </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <input
@@ -101,7 +119,7 @@ export default function AdminLoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   type="password"
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-600 placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:shadow-lg focus:shadow-cyan-400/25 font-mono"
+                  className="w-full pl-10 pr-4 py-3 dark:bg-black/50 border border-gray-600 placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:shadow-lg focus:shadow-cyan-400/25 font-mono"
                 />
               </div>
             </div>
@@ -134,12 +152,15 @@ export default function AdminLoginPage() {
           </form>
 
           <div className="mt-4 text-center">
-            <Link href="/" className="text-purple-400 hover:text-purple-300 font-mono text-xs underline">
+            <Link
+              href="/"
+              className="text-purple-400 hover:text-purple-300 font-mono text-xs underline"
+            >
               BACK_TO_SITE
             </Link>
           </div>
         </motion.div>
       </div>
     </div>
-  )
+  );
 }
