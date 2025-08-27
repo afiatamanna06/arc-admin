@@ -69,11 +69,11 @@ export default function AdminDashboard() {
             >
               <c.icon className="h-6 w-6 text-white" />
             </div>
-            <div className="text-white font-mono font-bold text-lg">{c.title}</div>
-            <div className="text-3xl font-mono font-black bg-gradient-to-r from-purple-400 to-teal-400 bg-clip-text text-transparent my-2">
+            <div className="dark:text-white font-mono font-bold text-lg">{c.title}</div>
+            <div className="text-3xl font-mono font-black bg-gradient-to-b from-purple-500/60 to-teal-500/60 bg-clip-text text-transparent my-2">
               {c.count}
             </div>
-            <div className="text-xs text-purple-300 font-mono">{c.hint}</div>
+            <div className="text-xs text-purple-500 dark:text-purple-400 font-mono">{c.hint}</div>
           </motion.div>
         </Link>
       ))}

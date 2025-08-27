@@ -1,16 +1,10 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { use, useEffect } from "react";
+
+import { redirect } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
-  const router = useRouter()
   useEffect(() => {
-    router.push("/login");
+    redirect("/login");
   }, []);
-  return (
-    <div className="">
-      <Button>Meh</Button>
-    </div>
-  );
 }

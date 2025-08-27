@@ -15,7 +15,6 @@ export default function AdminLoginPage() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const isDark = true
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -36,7 +35,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-black">
+    <div className="min-h-screen relative overflow-hidden">
       {/* Background */}
       <div className="fixed inset-0 opacity-20">
         <div
@@ -49,12 +48,6 @@ export default function AdminLoginPage() {
             backgroundSize: "50px 50px",
           }}
         />
-      </div>
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute top-20 left-20 w-2 h-32 bg-gradient-to-b from-purple-500 via-blue-500 to-teal-500 opacity-60 animate-pulse" />
-        <div className="absolute top-40 right-32 w-32 h-2 bg-gradient-to-r from-purple-500 via-blue-500 to-teal-500 opacity-60 animate-pulse" />
-        <div className="absolute bottom-32 left-1/3 w-2 h-24 bg-gradient-to-b from-teal-500 via-blue-500 to-purple-500 opacity-60 animate-pulse" />
-        <div className="absolute bottom-20 right-20 w-24 h-2 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 opacity-60 animate-pulse" />
       </div>
 
       <div className="relative z-10 min-h-screen flex items-center justify-center p-6">
@@ -73,18 +66,14 @@ export default function AdminLoginPage() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <div className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-purple-400" />
-          <div className="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-blue-400" />
-          <div className="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-teal-400" />
-          <div className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-purple-400" />
 
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-500/50">
               <Shield className="h-7 w-7 text-white" />
             </div>
             <div>
-              <h1 className="text-white font-mono font-bold text-xl">ADMIN_LOGIN</h1>
-              <p className="text-purple-400 font-mono text-xs">NEXUS_SYSTEM</p>
+              <h1 className="font-mono font-bold text-xl">ADMIN_LOGIN</h1>
+              <p className="text-purple-400 font-mono text-xs">GLAMMY</p>
             </div>
           </div>
 
@@ -98,7 +87,7 @@ export default function AdminLoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   placeholder="admin@nexus.com"
-                  className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:shadow-lg focus:shadow-cyan-400/25 font-mono"
+                  className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-600 placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:shadow-lg focus:shadow-cyan-400/25 font-mono"
                 />
               </div>
             </div>
@@ -112,7 +101,7 @@ export default function AdminLoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   type="password"
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:shadow-lg focus:shadow-cyan-400/25 font-mono"
+                  className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-600 placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:shadow-lg focus:shadow-cyan-400/25 font-mono"
                 />
               </div>
             </div>

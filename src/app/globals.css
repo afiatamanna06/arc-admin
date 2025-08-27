@@ -3,6 +3,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.light {
+  @apply bg-[#f8f7ff] text-[#1a1a2e];
+}
+
+.dark {
+  @apply bg-[#1a1a2e] text-[#f8f7ff];
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

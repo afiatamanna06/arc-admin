@@ -1,37 +1,58 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { type ReactNode, useEffect, useState } from "react"
-import { LayoutGrid, Users, Package, Images, LogOut, Shield, Menu, X } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
-import { cn } from "@/lib/utils"
-import AdminAIChatWidget from "./ai-chat"
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { type ReactNode, useState } from "react";
+import {
+  LayoutGrid,
+  Users,
+  Package,
+  Images,
+  LogOut,
+  Shield,
+  Menu,
+  X,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import AdminAIChatWidget from "./ai-chat";
+import { useAtom } from "jotai";
+import darkModeAtom from "@/atoms/darkModeAtom";
 
 const nav = [
   { href: "/dashboard", label: "DASHBOARD", icon: LayoutGrid, code: "ADM_000" },
   { href: "/dashboard/users", label: "USERS", icon: Users, code: "ADM_101" },
-  { href: "/dashboard/products", label: "PRODUCTS", icon: Package, code: "ADM_202" },
-  { href: "/dashboard/moderation", label: "MODERATION", icon: Images, code: "ADM_303" },
-]
+  {
+    href: "/dashboard/products",
+    label: "PRODUCTS",
+    icon: Package,
+    code: "ADM_202",
+  },
+  {
+    href: "/dashboard/moderation",
+    label: "MODERATION",
+    icon: Images,
+    code: "ADM_303",
+  },
+];
 
 export default function AdminShell({ children }: { children: ReactNode }) {
-  const pathname = usePathname()
-  const router = useRouter()
-  const [isDark, setIsDark] = useState(true)
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDark)
-  }, [isDark])
+  const pathname = usePathname();
+  const router = useRouter();
+  const [darkMode, setDarkMode] = useAtom(darkModeAtom);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const logout = () => {
-    localStorage.removeItem("admin-auth")
-    router.replace("/login")
-  }
+    localStorage.removeItem("admin-auth");
+    router.replace("/login");
+  };
 
   return (
-    <div className={cn("min-h-screen relative overflow-hidden", isDark ? "bg-black" : "bg-gray-50")}>
+    <div
+      className={cn(
+        "min-h-screen relative overflow-hidden bg-[#f8f7ff] dark:bg-[#1a1a2e]"
+      )}
+    >
       <div className="fixed inset-0 opacity-20 pointer-events-none">
         <div
           className="w-full h-full"
@@ -68,36 +89,24 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         <motion.aside
           className={cn(
             "fixed lg:relative z-50 w-80 lg:w-80 transition-all duration-300 ease-in-out",
-            sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
+            sidebarOpen
+              ? "translate-x-0"
+              : "-translate-x-full lg:translate-x-0",
+            // Background
+            "backdrop-blur-xl border-r shadow-lg",
+            // Light mode
+            "bg-[radial-gradient(circle_at_10%_20%,rgba(168,85,247,0.08)_0%,transparent_50%),radial-gradient(circle_at_90%_80%,rgba(59,130,246,0.06)_0%,transparent_50%),linear-gradient(135deg,rgba(255,255,255,0.95)_0%,rgba(255,255,255,0.8)_100%)]",
+            "border-r-[rgba(168,85,247,0.2)] shadow-[4px_0_24px_rgba(0,0,0,0.1),inset_-1px_0_0_rgba(255,255,255,0.8)]",
+            // Dark mode
+            "dark:bg-[radial-gradient(circle_at_10%_20%,rgba(168,85,247,0.1)_0%,transparent_50%),radial-gradient(circle_at_90%_80%,rgba(59,130,246,0.08)_0%,transparent_50%),linear-gradient(135deg,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0.7)_100%)]",
+            "dark:border-r-[rgba(168,85,247,0.3)] dark:shadow-[4px_0_24px_rgba(0,0,0,0.3),inset_-1px_0_0_rgba(255,255,255,0.1)]"
           )}
-          style={{
-            background: isDark
-              ? `
-                radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-                linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 100%)
-              `
-              : `
-                radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 100%)
-              `,
-            backdropFilter: "blur(20px)",
-            borderRight: isDark ? "1px solid rgba(168, 85, 247, 0.3)" : "1px solid rgba(168, 85, 247, 0.2)",
-            boxShadow: isDark
-              ? "4px 0 24px rgba(0, 0, 0, 0.3), inset -1px 0 0 rgba(255, 255, 255, 0.1)"
-              : "4px 0 24px rgba(0, 0, 0, 0.1), inset -1px 0 0 rgba(255, 255, 255, 0.8)",
-          }}
           initial={false}
         >
-          <div className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-purple-500" />
-          <div className="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-blue-500" />
-          <div className="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-teal-500" />
-          <div className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-purple-500" />
 
           <div className="p-5 lg:p-6 relative z-10 h-full overflow-y-auto">
             <button
-              className="lg:hidden absolute top-4 right-4 p-2 text-white hover:text-purple-400 transition-colors"
+              className="lg:hidden absolute top-4 right-4 p-2 dark:text-white hover:text-purple-400 transition-colors"
               onClick={() => setSidebarOpen(false)}
             >
               <X className="h-6 w-6" />
@@ -108,39 +117,53 @@ export default function AdminShell({ children }: { children: ReactNode }) {
                 <Shield className="h-6 w-6 text-white" />
               </div>
               <div>
-                <div className="text-white font-mono font-bold">ADMIN_PANEL</div>
-                <div className="text-purple-400 font-mono text-xs">NEXUS_SYSTEM</div>
+                <div className="dark:text-white font-mono font-bold">
+                  ADMIN_PANEL
+                </div>
+                <div className="text-purple-400 font-mono text-xs">
+                  GLAMMY
+                </div>
               </div>
             </div>
 
             <nav className="space-y-2 mb-6">
               {nav.map((item) => {
-                const active = pathname === item.href
+                const active = pathname === item.href;
                 return (
-                  <Link key={item.href} href={item.href} onClick={() => setSidebarOpen(false)}>
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setSidebarOpen(false)}
+                  >
                     <div
                       className={cn(
                         "w-full flex items-center gap-3 p-3 font-mono text-sm tracking-wider transition-all duration-300 border",
                         active
                           ? "bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-teal-500/20 border-purple-500/50 text-purple-400 shadow-lg shadow-purple-500/25"
-                          : "text-gray-400 hover:text-white hover:bg-white/5 border-transparent",
+                          : "text-gray-400 dark:hover:text-white hover:bg-white/5 border-transparent"
                       )}
                     >
                       <item.icon className="h-4 w-4" />
                       <span className="flex-1 text-left">{item.label}</span>
-                      <span className="text-xs opacity-60 hidden lg:block">{item.code}</span>
+                      <span className="text-xs opacity-60 hidden lg:block">
+                        {item.code}
+                      </span>
                     </div>
                   </Link>
-                )
+                );
               })}
             </nav>
 
             <div className="mt-auto pt-6 border-t border-white/10 flex items-center justify-between">
               <button
-                onClick={() => setIsDark((d) => !d)}
+                onClick={() => {
+                  darkMode === "light"
+                    ? setDarkMode("dark")
+                    : setDarkMode("light");
+                }}
                 className="px-3 py-2 bg-black/40 border border-purple-500/30 text-purple-300 font-mono text-xs hover:border-purple-400 transition-all"
               >
-                {isDark ? "LIGHT_MODE" : "DARK_MODE"}
+                {darkMode === "dark" ? "LIGHT_MODE" : "DARK_MODE"}
               </button>
               <button
                 onClick={logout}
@@ -155,31 +178,26 @@ export default function AdminShell({ children }: { children: ReactNode }) {
 
         <div className="flex-1 overflow-auto">
           <div
-            className="p-4 lg:p-6 relative"
-            style={{
-              background: isDark
-                ? `
-                  linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%),
-                  radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.1) 0%, transparent 50%)
-                `
-                : `
-                  linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%),
-                  radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.08) 0%, transparent 50%)
-                `,
-              backdropFilter: "blur(20px)",
-              borderBottom: isDark ? "1px solid rgba(168, 85, 247, 0.3)" : "1px solid rgba(168, 85, 247, 0.2)",
-            }}
+            className={cn(
+              "p-4 lg:p-6 relative backdrop-blur-xl border-b",
+              // Light mode
+              "bg-[linear-gradient(135deg,rgba(255,255,255,0.9)_0%,rgba(255,255,255,0.7)_100%),radial-gradient(circle_at_50%_0%,rgba(168,85,247,0.08)_0%,transparent_50%)]",
+              "border-b-[rgba(168,85,247,0.2)]",
+              // Dark mode
+              "dark:bg-[linear-gradient(135deg,rgba(0,0,0,0.8)_0%,rgba(0,0,0,0.6)_100%),radial-gradient(circle_at_50%_0%,rgba(168,85,247,0.1)_0%,transparent_50%)]",
+              "dark:border-b-[rgba(168,85,247,0.3)]"
+            )}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <button
-                  className="lg:hidden p-2 text-white hover:text-purple-400 transition-colors"
+                  className="lg:hidden p-2 dark:text-white hover:text-purple-400 transition-colors"
                   onClick={() => setSidebarOpen(true)}
                 >
                   <Menu className="h-6 w-6" />
                 </button>
                 <div>
-                  <h1 className="text-xl lg:text-2xl font-mono font-bold text-white tracking-wider mb-1">
+                  <h1 className="text-xl lg:text-2xl font-mono font-bold dark:text-white tracking-wider mb-1">
                     {nav.find((n) => n.href === pathname)?.label ?? "ADMIN"}
                   </h1>
                   <p className="text-purple-400 font-mono text-xs lg:text-sm">
@@ -197,5 +215,5 @@ export default function AdminShell({ children }: { children: ReactNode }) {
       {/* AI Assistant Widget */}
       <AdminAIChatWidget />
     </div>
-  )
+  );
 }

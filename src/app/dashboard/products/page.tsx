@@ -77,8 +77,8 @@ export default function ProductsPage() {
           backdropFilter: "blur(20px)",
         }}
       >
-        <div className="text-white font-mono font-bold">PRODUCT_MANAGEMENT</div>
-        <div className="text-xs text-blue-300 font-mono">ADD_EDIT_DELETE_PRODUCTS</div>
+        <div className="dark:text-white font-mono font-bold">PRODUCT_MANAGEMENT</div>
+        <div className="text-xs text-blue-500 dark:text-blue-400 font-mono">ADD_EDIT_DELETE_PRODUCTS</div>
       </div>
 
       <div
@@ -93,7 +93,7 @@ export default function ProductsPage() {
               value={draft.name}
               onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
               placeholder="Neon Jacket"
-              className="w-full pl-10 pr-3 py-3 bg-black/40 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 font-mono"
+              className="w-full pl-10 pr-3 py-3 dark:bg-black/40 border border-gray-600 dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 font-mono"
             />
           </div>
         </div>
@@ -106,7 +106,7 @@ export default function ProductsPage() {
               value={draft.price}
               onChange={(e) => setDraft((d) => ({ ...d, price: Number(e.target.value) }))}
               placeholder="129"
-              className="w-full pl-10 pr-3 py-3 bg-black/40 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 font-mono"
+              className="w-full pl-10 pr-3 py-3 dark:bg-black/40 border border-gray-600 dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 font-mono"
             />
           </div>
         </div>
@@ -116,7 +116,7 @@ export default function ProductsPage() {
             value={draft.description}
             onChange={(e) => setDraft((d) => ({ ...d, description: e.target.value }))}
             placeholder="Product description..."
-            className="w-full min-h-[90px] p-3 bg-black/40 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 font-mono"
+            className="w-full min-h-[90px] p-3 dark:bg-black/40 border border-gray-600 dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 font-mono"
           />
         </div>
         <div className="space-y-3">
@@ -135,7 +135,7 @@ export default function ProductsPage() {
                 }))
               }
               placeholder="Apparel, Jackets"
-              className="w-full pl-10 pr-3 py-3 bg-black/40 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 font-mono"
+              className="w-full pl-10 pr-3 py-3 dark:bg-black/40 border border-gray-600 dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 font-mono"
             />
           </div>
         </div>
@@ -155,7 +155,7 @@ export default function ProductsPage() {
                 }))
               }
               placeholder="neon, reflective"
-              className="w-full pl-10 pr-3 py-3 bg-black/40 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 font-mono"
+              className="w-full pl-10 pr-3 py-3 dark:bg-black/40 border border-gray-600 dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 font-mono"
             />
           </div>
         </div>
@@ -175,7 +175,7 @@ export default function ProductsPage() {
                 }))
               }
               placeholder="/images/a.jpg"
-              className="w-full min-h-[90px] pl-10 pr-3 py-3 bg-black/40 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 font-mono"
+              className="w-full min-h-[90px] pl-10 pr-3 py-3 dark:bg-black/40 border border-gray-600 dark:text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 font-mono"
             />
           </div>
         </div>
@@ -191,7 +191,7 @@ export default function ProductsPage() {
           {isEditing && (
             <button
               onClick={reset}
-              className="inline-flex items-center gap-2 px-4 h-11 bg-black/40 border border-gray-600 text-white font-mono"
+              className="inline-flex items-center gap-2 px-4 h-11 dark:bg-black/40 border border-gray-600 dark:text-white font-mono"
             >
               <X className="h-4 w-4" />
               CANCEL
@@ -223,17 +223,17 @@ export default function ProductsPage() {
                   transition={{ delay: i * 0.03 }}
                   className="border-t border-white/10"
                 >
-                  <td className="px-4 py-3 text-sm text-gray-300 font-mono">{p.id}</td>
-                  <td className="px-4 py-3 text-sm text-white font-mono">{p.name}</td>
-                  <td className="px-4 py-3 text-sm text-gray-300 font-mono">${p.price.toFixed(2)}</td>
-                  <td className="px-4 py-3 text-sm text-gray-300 font-mono">{p.categories.join(", ") || "-"}</td>
-                  <td className="px-4 py-3 text-sm text-gray-300 font-mono">{p.tags.join(", ") || "-"}</td>
-                  <td className="px-4 py-3 text-sm text-gray-300 font-mono">{p.images.length}</td>
+                  <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 font-mono">{p.id}</td>
+                  <td className="px-4 py-3 text-sm dark:text-white font-mono">{p.name}</td>
+                  <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 font-mono">${p.price.toFixed(2)}</td>
+                  <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 font-mono">{p.categories.join(", ") || "-"}</td>
+                  <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 font-mono">{p.tags.join(", ") || "-"}</td>
+                  <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 font-mono">{p.images.length}</td>
                   <td className="px-4 py-3 text-sm text-right">
                     <div className="inline-flex items-center gap-2">
                       <button
                         onClick={() => edit(p)}
-                        className="inline-flex items-center gap-2 px-3 py-2 bg-black/40 border border-blue-500/30 text-blue-300 font-mono text-xs hover:border-blue-400"
+                        className="inline-flex items-center gap-2 px-3 py-2 dark:bg-black/40 border border-blue-500/30 text-blue-300 font-mono text-xs hover:border-blue-400"
                       >
                         <Edit className="h-4 w-4" />
                         EDIT
