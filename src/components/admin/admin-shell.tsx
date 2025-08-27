@@ -7,7 +7,6 @@ import {
   LayoutGrid,
   Users,
   Package,
-  Images,
   LogOut,
   Menu,
   X,
@@ -16,8 +15,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import AdminAIChatWidget from "./ai-chat";
-import { useAtom } from "jotai";
-import darkModeAtom from "@/atoms/darkModeAtom";
 import ColorModeSwitch from "../common/ColorModeSwitch";
 
 const nav = [
@@ -29,12 +26,12 @@ const nav = [
     icon: Package,
     code: "ADM_202",
   },
-  {
-    href: "/dashboard/moderation",
-    label: "MODERATION",
-    icon: Images,
-    code: "ADM_303",
-  },
+  // {
+  //   href: "/dashboard/moderation",
+  //   label: "MODERATION",
+  //   icon: Images,
+  //   code: "ADM_303",
+  // },
 ];
 
 export default function AdminShell({ children }: { children: ReactNode }) {
@@ -153,7 +150,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
               })}
             </nav>
 
-            <div className="mt-auto pt-3 border-t border-white/10 flex items-center justify-between">
+            <div className="mt-auto pt-3 border-t dark:border-white/10 flex items-center justify-between">
               <button
                 onClick={logout}
                 className="px-3 py-2.5 w-full justify-center bg-red-500/20 border border-red-500/30 text-red-400 font-mono text-xs hover:border-red-400 transition-all inline-flex items-center gap-2"
