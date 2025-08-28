@@ -20,6 +20,26 @@ export interface Product {
   updatedAt: string
 }
 
+export type ExtendedProduct = Product & {
+  brand?: string
+  originalPrice?: number
+  category?: string
+  subcategory?: string
+  fabric?: string
+  color?: string
+  gender?: string
+  fit?: string
+  season?: string
+  style?: string
+  sizes?: string[]
+  status?: "draft" | "published" | "archived"
+  priority?: "low" | "medium" | "high"
+  collection?: string
+  inStock?: boolean
+  isNew?: boolean
+  isSale?: boolean
+}
+
 export type DesignStatus = "pending" | "approved" | "rejected"
 
 export interface SubmittedDesign {
