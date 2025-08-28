@@ -30,6 +30,7 @@ import {
   X,
   Save,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 type Props = {
   initial?: ExtendedProduct;
@@ -38,6 +39,7 @@ type Props = {
 
 export default function ProductForm({ initial, onSubmitSuccess }: Props) {
   const { addProduct, updateProduct } = useAdminStore();
+  const router = useRouter();
   const [draft, setDraft] = useState<ExtendedProduct>(
     initial ?? emptyProduct()
   );
@@ -177,7 +179,7 @@ export default function ProductForm({ initial, onSubmitSuccess }: Props) {
           {isEditing ? "UPDATE_EXISTING_PRODUCT" : "ADD_NEW_PRODUCT"}
         </div>
       </div>
-      <form onSubmit={onSubmit} className="space-y-8">
+      <form onSubmit={onSubmit} className="space-y-8 mt-6">
         {/* Basic Information */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -705,7 +707,10 @@ export default function ProductForm({ initial, onSubmitSuccess }: Props) {
           {isEditing && (
             <motion.button
               type="button"
-              onClick={reset}
+              onClick={() => {
+                reset();
+                router.back();
+              }}
               className="px-6 py-3 bg-gray-500/20 border border-gray-500/30 text-gray-600 dark:text-gray-400 font-mono hover:border-gray-400 transition-all flex items-center justify-center gap-2"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

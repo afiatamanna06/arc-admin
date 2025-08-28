@@ -26,15 +26,35 @@ export default function ProductsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-bold">Products</h1>
-        <Link
-          href="/dashboard/products/add"
-          className="btn btn-primary flex items-center gap-2"
+      <div
+        className="flex justify-between items-center p-4"
+        style={{
+          background: `
+            radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 60%),
+            linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)
+          `,
+          border: "1px solid rgba(255,255,255,0.2)",
+          backdropFilter: "blur(20px)",
+        }}
+      >
+        <div className="relative overflow-hidden">
+          <div className="dark:text-white font-mono font-bold">
+            {"PRODUCT MANAGEMENT"}
+          </div>
+          <div className="text-xs text-blue-500 dark:text-blue-400 font-mono">
+            {"PRODUCT LIST"}
+          </div>
+        </div>
+
+        <motion.button
+          type="submit"
+          onClick={() => router.push("/dashboard/products/add")}
+          className="px-6 py-3  bg-blue-500/20 hover:bg-blue-500/15 text-blue-500 font-mono transition-all flex items-center justify-center gap-2"
         >
           <Plus size={16} /> Add Product
-        </Link>
+        </motion.button>
       </div>
+      {/* HEADER */}
 
       {/* Table */}
       <div
