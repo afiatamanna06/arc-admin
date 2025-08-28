@@ -731,7 +731,7 @@ export default function ProductForm({ initial, onSubmitSuccess }: Props) {
               !draft.color ||
               !draft.gender
             }
-            className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-mono transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-3 border border-teal-400 bg-teal-500/20 hover:bg-teal-500/15 text-teal-500 dark:text-teal-400 font-mono transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
             whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
             whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
           >

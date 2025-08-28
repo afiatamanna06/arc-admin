@@ -64,7 +64,7 @@ export default function ProductsPage() {
         <div className="overflow-auto">
           <table className="min-w-full">
             <thead className="bg-white/5">
-              <tr className="text-left text-xs text-blue-300 font-mono">
+              <tr className="text-left text-xs text-blue-400 dark:text-blue-300 font-mono">
                 <th className="px-4 py-3">ID</th>
                 <th className="px-4 py-3">NAME</th>
                 <th className="px-4 py-3">BRAND</th>
@@ -111,7 +111,7 @@ export default function ProductsPage() {
                     <td className="px-4 py-3 text-sm dark:text-white font-mono">
                       {p.name}
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-300 dark:text-gray-200 font-mono">
+                    <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 font-mono">
                       {ep.brand || "-"}
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 font-mono">
@@ -158,14 +158,14 @@ export default function ProductsPage() {
                           onClick={() =>
                             router.push(`/dashboard/products/${p.id}/edit`)
                           }
-                          className="inline-flex items-center gap-2 px-3 py-2 dark:bg-black/40 border border-blue-500/30 text-blue-300 font-mono text-xs hover:border-blue-400"
+                          className="inline-flex items-center gap-2 px-3 py-2 dark:bg-black/40 border cursor-pointer border-blue-500/40 text-blue-400 font-mono text-xs hover:border-blue-400"
                         >
                           <Edit className="h-4 w-4" />
                           EDIT
                         </button>
                         <button
                           onClick={() => deleteProduct(p.id)}
-                          className="inline-flex items-center gap-2 px-3 py-2 bg-red-500/20 border border-red-500/30 text-red-300 font-mono text-xs hover:border-red-400"
+                          className="inline-flex items-center gap-2 px-3 py-2 bg-red-500/15 border cursor-pointer border-red-500/40 text-red-400 font-mono text-xs hover:border-red-400"
                         >
                           <Trash2 className="h-4 w-4" />
                           DELETE
