@@ -135,8 +135,8 @@ export default function AdminShell({ children }: { children: ReactNode }) {
                       className={cn(
                         "w-full flex items-center gap-3 p-3 font-mono text-sm tracking-wider transition-all duration-300 border",
                         active
-                          ? "bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-teal-500/20 border-purple-500/50 text-purple-400 shadow-lg shadow-purple-500/25"
-                          : "text-gray-400 dark:hover:text-white hover:bg-white/5 border-transparent"
+                          ? "bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-teal-500/20 border-purple-500/50 text-purple-500 dark:text-purple-400 shadow-lg shadow-purple-500/25"
+                          : "text-gray-600 dark:text-gray-400 hover:bg-gray-500/5 dark:hover:text-white dark:hover:bg-white/5 border-transparent"
                       )}
                     >
                       <item.icon className="h-4 w-4" />

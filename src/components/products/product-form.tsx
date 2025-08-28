@@ -162,15 +162,13 @@ export default function ProductForm({ initial, onSubmitSuccess }: Props) {
     <div>
       {/* HEADER */}
       <div
-        className="relative overflow-hidden p-4"
-        style={{
-          background: `
-            radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 60%),
-            linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)
-          `,
-          border: "1px solid rgba(255,255,255,0.2)",
-          backdropFilter: "blur(20px)",
-        }}
+        className={`
+          relative overflow-hidden p-4
+          border border-white/20 dark:border-white/10
+          backdrop-blur-[20px]
+          bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.15)_0%,transparent_60%),linear-gradient(135deg,rgba(0,0,0,0.0)_0%,rgba(0,0,0,0.02)_100%)]
+          dark:bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.25)_0%,transparent_60%),linear-gradient(135deg,rgba(255,255,255,0.01)_0%,rgba(255,255,255,0.01)_100%)]
+        `}
       >
         <div className="dark:text-white font-mono font-bold">
           {isEditing ? "EDIT PRODUCT" : "PRODUCT MANAGEMENT"}
