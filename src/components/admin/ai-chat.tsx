@@ -15,6 +15,10 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useAdminStore } from "./store";
+import { useAtom } from "jotai";
+import darkModeAtom from "@/atoms/darkModeAtom";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 type ChatMsg = { id: string; role: "user" | "assistant"; content: string };
 
@@ -25,6 +29,8 @@ function uid() {
 export default function AdminAIChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [darkMode] = useAtom(darkModeAtom);
+  const isDark = darkMode === "light";
   const [history, setHistory] = useState<ChatMsg[]>([
     {
       id: uid(),
@@ -124,11 +130,24 @@ export default function AdminAIChatWidget() {
 
     // NAVIGATE
     const nav = text.match(
-      /\b(?:go|open|navigate)\s+(dashboard|users|products|moderation)\b/i
+      /\b(?:go\s*(?:to)?|open|navigate)\s+(dashboard|user(?:s)?|product(?:s)?|moderation)\b/i
     );
+
     if (nav) {
-      const dest = nav[1].toLowerCase();
-      router.push(dest === "dashboard" ? "/dashboard" : `/dashboard/${dest}`);
+      const rawDest = nav[1].toLowerCase();
+      console.log("Matched nav:", nav);
+      console.log("Raw dest:", rawDest);
+
+      let dest: "dashboard" | "users" | "products" | "moderation";
+      if (rawDest.startsWith("user")) dest = "users";
+      else if (rawDest.startsWith("product")) dest = "products";
+      else if (rawDest.startsWith("moderation")) dest = "moderation";
+      else dest = "dashboard";
+
+      const path = dest === "dashboard" ? "/dashboard" : `/dashboard/${dest}`;
+      console.log("Navigating to path:", path);
+      router.push(path);
+
       return `Navigating to ${dest.toUpperCase()}...`;
     }
 
@@ -325,7 +344,8 @@ export default function AdminAIChatWidget() {
     return "Unrecognized command. Type 'help' for supported actions.";
   };
 
-  const onSend = async () => {
+  const onSend = async (e: React.FormEvent) => {
+    e.preventDefault();
     const msg = input.trim();
     if (!msg) return;
     setHistory((h) => [...h, { id: uid(), role: "user", content: msg }]);
@@ -375,7 +395,8 @@ export default function AdminAIChatWidget() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-stretch justify-end bg-black/40 backdrop-blur-sm"
+            className={`fixed inset-0 z-50 flex items-stretch justify-end backdrop-blur-md 
+              ${isDark ? "bg-black/40" : "bg-gray-200/40"}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -383,13 +404,21 @@ export default function AdminAIChatWidget() {
           >
             <motion.div
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-xl h-full bg-black/80 border-l border-white/10 p-4 flex flex-col"
+              className={`w-full max-w-xl h-full flex flex-col border-l p-4
+                ${
+                  isDark
+                    ? "bg-black/60 border-white/10"
+                    : "bg-white/70 border-gray-200"
+                }`}
               initial={{ x: 40, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: 40, opacity: 0 }}
             >
               {/* Header */}
-              <div className="flex items-start justify-between pb-3 border-b border-white/10">
+              <div
+                className={`flex items-start justify-between pb-3 border-b 
+                  ${isDark ? "border-white/10" : "border-gray-200"}`}
+              >
                 <div className="flex flex-col gap-3">
                   <Image
                     src="/icon.png"
@@ -399,27 +428,46 @@ export default function AdminAIChatWidget() {
                     className="h-12 w-32"
                   />
                   <div>
-                    <div className="text-white font-mono font-bold text-sm tracking-wider">
-                      Glammy_ADMIN_ASSISTANT
+                    <div
+                      className={`font-mono font-bold text-sm tracking-wider 
+                        ${isDark ? "text-white" : "text-gray-800"}`}
+                    >
+                      GLAMMY_ADMIN_ASSISTANT
                     </div>
-                    <div className="text-xs text-purple-300 font-mono">
-                      Type 'help' for commands • {summary}
+                    <div
+                      className={`text-xs font-mono 
+                        ${isDark ? "text-purple-300" : "text-purple-600"}`}
+                    >
+                      Type 'help' for commands • {/* summary */}
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <label className="inline-flex items-center gap-2 text-xs font-mono text-purple-300">
+                  <label
+                    className={`inline-flex items-center gap-2 text-xs font-mono 
+                      ${isDark ? "text-purple-300" : "text-purple-600"}`}
+                  >
                     <input
                       type="checkbox"
                       checked={aiMode}
                       onChange={(e) => setAiMode(e.target.checked)}
-                      className="w-4 h-4 bg-black/50 border border-gray-600"
+                      className={`w-4 h-4 border 
+                        ${
+                          isDark
+                            ? "bg-black/50 border-gray-600"
+                            : "bg-white border-gray-400"
+                        }`}
                     />
                     AI_MODE
                   </label>
                   <button
                     onClick={() => setOpen(false)}
-                    className="p-2 bg-black/40 border border-gray-600 text-white hover:border-purple-400"
+                    className={`p-2 border hover:border-purple-400 
+                      ${
+                        isDark
+                          ? "bg-black/40 border-gray-600 text-white"
+                          : "bg-gray-100 border-gray-400 text-gray-800"
+                      }`}
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -439,11 +487,14 @@ export default function AdminAIChatWidget() {
                     }`}
                   >
                     <div
-                      className={`max-w-[80%] px-3 py-2 text-sm font-mono leading-relaxed border ${
-                        m.role === "user"
-                          ? "bg-gradient-to-r from-purple-500/30 to-blue-500/30 text-white border-purple-500/40"
-                          : "bg-black/50 text-gray-100 border-white/10"
-                      }`}
+                      className={`max-w-[80%] px-3 py-2 text-sm font-mono leading-relaxed border
+                        ${
+                          m.role === "user"
+                            ? "bg-gradient-to-r from-purple-500/30 to-blue-500/30 border-purple-500/40"
+                            : isDark
+                            ? "bg-black/50 text-gray-100 border-white/10"
+                            : "bg-gray-100 text-gray-800 border-gray-200"
+                        }`}
                     >
                       {m.content}
                     </div>
@@ -453,39 +504,73 @@ export default function AdminAIChatWidget() {
 
               {/* Hints */}
               <div className="text-[11px] font-mono text-gray-400 mb-2 flex flex-wrap gap-2">
-                <span className="px-2 py-1 bg-white/5 border border-white/10 inline-flex items-center gap-1">
+                <span className="px-2 py-1 bg-gray-100 dark:bg-white/5 border dark:border-white/10 inline-flex items-center gap-1">
                   <UserPlus className="h-3 w-3" /> promote u_001
                 </span>
-                <span className="px-2 py-1 bg-white/5 border border-white/10 inline-flex items-center gap-1">
+                <span className="px-2 py-1 bg-gray-100 dark:bg-white/5 border dark:border-white/10 inline-flex items-center gap-1">
                   <Navigation className="h-3 w-3" /> navigate products
                 </span>
-                <span className="px-2 py-1 bg-white/5 border border-white/10 inline-flex items-center gap-1">
+                <span className="px-2 py-1 bg-gray-100 dark:bg-white/5 border dark:border-white/10 inline-flex items-center gap-1">
                   <ImageIcon className="h-3 w-3" /> approve d_001 comment: nice
                 </span>
-                <span className="px-2 py-1 bg-white/5 border border-white/10 inline-flex items-center gap-1">
+                <span className="px-2 py-1 bg-gray-100 dark:bg-white/5 border dark:border-white/10 inline-flex items-center gap-1">
                   <Check className="h-3 w-3" /> add product name: Glass Tee
                   price: 49
                 </span>
-                <span className="px-2 py-1 bg-white/5 border border-white/10 inline-flex items-center gap-1">
+                <span className="px-2 py-1 bg-gray-100 dark:bg-white/5 border dark:border-white/10 inline-flex items-center gap-1">
                   <Trash2 className="h-3 w-3" /> delete product p_001
                 </span>
               </div>
 
               {/* Composer */}
-              <div className="flex items-end gap-2">
-                <textarea
+
+              <form onSubmit={onSend} className="flex items-center gap-2">
+                <Input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Type a command… (help)"
-                  className="flex-1 min-h-[44px] max-h-36 p-3 bg-black/50 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:border-purple-400 font-mono"
+                  aria-label="Chat input"
+                  className="w-full outline-none rounded-none transition-colors"
                 />
-                <button
-                  onClick={onSend}
-                  className="h-11 px-4 bg-gradient-to-r from-purple-500 via-blue-500 to-teal-500 text-white font-mono font-bold inline-flex items-center gap-2"
-                >
-                  <Send className="h-4 w-4" /> SEND
-                </button>
-              </div>
+
+                <div className="relative hidden lg:inline-flex group">
+                  {/* Moving glow background */}
+                  <div
+                    className="absolute -inset-[0.2px] rounded-md blur-md opacity-40 group-hover:opacity-60 transition z-0
+                                animate-gradient-move bg-[length:300%_300%] bg-gradient-to-r from-purple-500 via-blue-500 to-teal-500"
+                  ></div>
+
+                  {/* Actual button */}
+                  <Button
+                    size="lg"
+                    type="submit"
+                    className="relative w-[5.5rem] py-4 z-10 flex items-center gap-2 rounded-none bg-gradient-to-br from-purple-500/50 via-blue-500/50 to-teal-500/50 text-white
+                                font-semibold shadow-md hover:shadow-lg hover:bg-gradient-to-tl hover:from-purple-500/40 hover:via-blue-500/40 hover:to-teal-500/40 transition duration-300 overflow-hidden"
+                  >
+                    <Send className="h-4 w-4" />
+                    Send
+                  </Button>
+
+                  {/* Animation style */}
+                  <style>{`
+                              @keyframes gradientMove {
+                                0% {
+                                  background-position: 0% 50%;
+                                }
+                                50% {
+                                  background-position: 100% 50%;
+                                }
+                                100% {
+                                  background-position: 0% 50%;
+                                }
+                              }
+              
+                              .animate-gradient-move {
+                                animation: gradientMove 6s ease infinite;
+                              }
+                            `}</style>
+                </div>
+              </form>
             </motion.div>
           </motion.div>
         )}
