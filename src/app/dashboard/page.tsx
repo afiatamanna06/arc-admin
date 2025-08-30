@@ -28,9 +28,7 @@ export default function AdminDashboard() {
   const publishedProducts = products.filter(
     (p) => p.status === "published"
   ).length;
-  const draftProducts = products.filter(
-    (p) => p.status === "draft"
-  ).length;
+  const draftProducts = products.filter((p) => p.status === "draft").length;
   const inStockProducts = products.filter((p) => p.inStock).length;
 
   // ----- Data for Charts -----

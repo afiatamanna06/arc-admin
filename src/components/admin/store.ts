@@ -68,7 +68,7 @@ export const useAdminStore = create<AdminState>((set, get) => ({
   addProduct: (p) => {
     const id = `p_${Math.random().toString(36).slice(2, 8)}`
     const now = new Date().toISOString()
-    const newP: Product = { id, createdAt: now, updatedAt: now, ...p }
+    const newP: ExtendedProduct = { ...p, id, createdAt: now, updatedAt: now }
     set((state) => ({ products: [newP, ...state.products] }))
     return newP
   },

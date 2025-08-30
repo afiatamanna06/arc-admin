@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useAdminStore, type Product } from "@/components/admin/store";
+import { useAdminStore } from "@/components/admin/store";
 import { motion } from "framer-motion";
 
-import { ExtendedProduct } from "../admin/types";
+import { ExtendedProduct, Product } from "../admin/types";
 import { computeCategoriesArray, emptyProduct } from "@/utils/utils";
 import {
   categories,
