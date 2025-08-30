@@ -9,7 +9,7 @@ export const initialUsers: AdminUser[] = [
 
 export const initialProducts: ExtendedProduct[] = [
   {
-    id: "ep_001",
+    id: "p_001",
     name: "Neon Hoodie",
     description: "Cyberpunk neon-lined hoodie with reflective seams.",
     price: 129,
@@ -19,7 +19,7 @@ export const initialProducts: ExtendedProduct[] = [
     subcategory: "Hoodies",
     tags: ["neon", "streetwear"],
     images: ["/neon-hoodie.png"],
-    brand: "Void Studio",
+    brand: "Meh",
     fabric: "Polyester",
     color: "Black",
     gender: "Unisex",
@@ -37,7 +37,7 @@ export const initialProducts: ExtendedProduct[] = [
     updatedAt: "2025-06-11",
   },
   {
-    id: "ep_002",
+    id: "p_002",
     name: "Glass Tee",
     description: "Ultra-soft tee with glassmorphism print.",
     price: 49,
@@ -47,7 +47,7 @@ export const initialProducts: ExtendedProduct[] = [
     subcategory: "Tees",
     tags: ["glassmorphism", "minimal"],
     images: ["/glass-tee.png"],
-    brand: "Leveor",
+    brand: "Meh",
     fabric: "Cotton",
     color: "White",
     gender: "Unisex",
@@ -65,7 +65,7 @@ export const initialProducts: ExtendedProduct[] = [
     updatedAt: "2025-06-05",
   },
   {
-    id: "ep_003",
+    id: "p_003",
     name: "Retro Denim Jacket",
     description: "Classic denim jacket with distressed details.",
     price: 189,
@@ -75,7 +75,7 @@ export const initialProducts: ExtendedProduct[] = [
     subcategory: "Jackets",
     tags: ["denim", "retro", "casual"],
     images: ["/retro-denim.png"],
-    brand: "Fringecore",
+    brand: "Meh",
     fabric: "Denim",
     color: "Blue",
     gender: "Unisex",
