@@ -19,6 +19,18 @@ import {
 import { initialUsers } from "@/components/admin/mock-data";
 import { useAdminStore } from "@/components/admin/store";
 
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="p-2 rounded border border-white/20 shadow-lg shadow-purple-500/20 bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
+        <p className="font-bold">{label}</p>
+        <p>{payload[0].value}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
 export default function AdminDashboard() {
   const { products } = useAdminStore();
   // ----- Stats -----
@@ -187,14 +199,22 @@ export default function AdminDashboard() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-transparent p-6 shadow-xl shadow-blue-100 dark:shadow-blue-800/30">
+        <div className="bg-transparent p-6 shadow-xl shadow-blue-100 dark:shadow-blue-800/30 rounded-2xl">
           <h2 className="text-sm font-bold mb-4">User Roles</h2>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={userRoleData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis allowDecimals={false} />
-              <Tooltip />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="rgba(0,0,0,0.1)"
+                className="dark:stroke-white/10"
+              />
+              <XAxis dataKey="name" stroke="gray" className="dark:text-white" />
+              <YAxis
+                allowDecimals={false}
+                stroke="gray"
+                className="dark:text-white"
+              />
+              <Tooltip content={<CustomTooltip />} />
               <Bar dataKey="value" fill="#8b5cf6" />
             </BarChart>
           </ResponsiveContainer>

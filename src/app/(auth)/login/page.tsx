@@ -16,6 +16,7 @@ import {
 import { motion } from "framer-motion";
 import Image from "next/image";
 import ColorModeSwitch from "@/components/common/ColorModeSwitch";
+import { Button } from "@/components/ui/button";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -64,18 +65,17 @@ export default function AdminLoginPage() {
           <ColorModeSwitch className="bg-purple-200 dark:bg-purple-500/20 p-3 cursor-pointer rounded-full text-purple-600 dark:text-white" />
         </div>
         <motion.div
-          className="w-full max-w-md relative overflow-hidden p-8"
-          style={{
-            background: `
-              radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.2) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-              linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%)
-            `,
-            backdropFilter: "blur(25px)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
-            boxShadow:
-              "0 20px 40px rgba(0, 0, 0, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.15)",
-          }}
+          className="
+  w-full max-w-md relative overflow-hidden p-8
+  border-[rgba(255,255,255,0.2)]
+  backdrop-blur-[25px]
+  shadow-[0_20px_40px_rgba(168,85,247,.2),_inset_0_2px_0_rgba(255,255,255,0.15)]
+  [background:radial-gradient(circle_at_20%_20%,rgba(168,85,247,0.15)_0%,transparent_50%),radial-gradient(circle_at_80%_80%,rgba(59,130,246,0.25)_0%,transparent_50%),linear-gradient(135deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.02)_100%)]
+  
+  dark:border-[rgba(255,255,255,0.1)]
+  dark:shadow-[0_20px_40px_rgba(168,85,247,0.2),_inset_0_2px_0_rgba(255,255,255,0.05)]
+  dark:[background:radial-gradient(circle_at_20%_20%,rgba(168,85,247,0.2)_0%,transparent_50%),radial-gradient(circle_at_80%_80%,rgba(59,130,246,0.4)_0%,transparent_50%),linear-gradient(135deg,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.05)_100%)]
+"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
         >
@@ -137,28 +137,45 @@ export default function AdminLoginPage() {
               </div>
             )}
 
-            <motion.button
-              type="submit"
-              disabled={loading}
-              className="w-full h-11 bg-gradient-to-r from-purple-500 via-blue-500 to-teal-500 text-white font-mono font-bold tracking-wider shadow-lg shadow-purple-500/25 relative overflow-hidden disabled:opacity-50"
-              whileHover={{ scale: loading ? 1 : 1.02 }}
-              whileTap={{ scale: loading ? 1 : 0.98 }}
-            >
-              <span className="relative z-10 inline-flex items-center gap-2 justify-center">
-                {loading ? "VERIFYING..." : "ENTER_PANEL"}
-                <ArrowRight className="h-4 w-4" />
-              </span>
-            </motion.button>
-          </form>
+            <div className="relative inline-flex group w-full mt-2">
+              {/* Moving glow background */}
+              <div
+                className="absolute -inset-[0.2px] rounded-md blur-md opacity-40 group-hover:opacity-60 transition z-0
+                                animate-gradient-move bg-[length:300%_300%] bg-gradient-to-r from-purple-500 via-blue-500 to-teal-500"
+              ></div>
 
-          <div className="mt-4 text-center">
-            <Link
-              href="/"
-              className="text-purple-400 hover:text-purple-300 font-mono text-xs underline"
-            >
-              BACK_TO_SITE
-            </Link>
-          </div>
+              {/* Actual button */}
+              <Button
+                size="lg"
+                type="submit"
+                disabled={loading}
+                className="relative w-full py-6 text-base z-10 flex items-center gap-2 rounded-none bg-gradient-to-br from-purple-500/50 via-blue-500/50 to-teal-500/50 text-white
+                                font-semibold shadow-md hover:shadow-lg hover:bg-gradient-to-tl hover:from-purple-500/40 hover:via-blue-500/40 hover:to-teal-500/40 transition duration-300 overflow-hidden"
+              >
+                {loading ? "VERIFYING..." : "ENTER PANEL"}
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+
+              {/* Animation style */}
+              <style>{`
+                              @keyframes gradientMove {
+                                0% {
+                                  background-position: 0% 50%;
+                                }
+                                50% {
+                                  background-position: 100% 50%;
+                                }
+                                100% {
+                                  background-position: 0% 50%;
+                                }
+                              }
+              
+                              .animate-gradient-move {
+                                animation: gradientMove 6s ease infinite;
+                              }
+                            `}</style>
+            </div>
+          </form>
         </motion.div>
       </div>
     </div>
