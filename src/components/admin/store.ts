@@ -2,6 +2,7 @@
 
 import { create } from "zustand"
 import { initialUsers, initialProducts, initialDesigns } from "./mock-data"
+import { ExtendedProduct, Product } from "./types"
 
 export type Role = "user" | "designer" | "admin"
 
@@ -11,18 +12,6 @@ export interface AdminUser {
   email: string
   role: Role
   joinedAt: string
-}
-
-export interface Product {
-  id: string
-  name: string
-  description: string
-  price: number
-  categories: string[]
-  tags: string[]
-  images: string[]
-  createdAt: string
-  updatedAt: string
 }
 
 export type DesignStatus = "pending" | "approved" | "rejected"
@@ -40,7 +29,7 @@ export interface SubmittedDesign {
 
 type AdminState = {
   users: AdminUser[]
-  products: Product[]
+  products: ExtendedProduct[]
   designs: SubmittedDesign[]
   // actions
   promoteUserById: (id: string) => boolean

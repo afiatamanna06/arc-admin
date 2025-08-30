@@ -16,20 +16,22 @@ import {
   CartesianGrid,
 } from "recharts";
 
-import { initialUsers, initialProducts } from "@/components/admin/mock-data";
+import { initialUsers } from "@/components/admin/mock-data";
+import { useAdminStore } from "@/components/admin/store";
 
 export default function AdminDashboard() {
+  const { products } = useAdminStore();
   // ----- Stats -----
   const totalUsers = initialUsers.length;
   const designers = initialUsers.filter((u) => u.role === "designer").length;
-  const totalProducts = initialProducts.length;
-  const publishedProducts = initialProducts.filter(
+  const totalProducts = products.length;
+  const publishedProducts = products.filter(
     (p) => p.status === "published"
   ).length;
-  const draftProducts = initialProducts.filter(
+  const draftProducts = products.filter(
     (p) => p.status === "draft"
   ).length;
-  const inStockProducts = initialProducts.filter((p) => p.inStock).length;
+  const inStockProducts = products.filter((p) => p.inStock).length;
 
   // ----- Data for Charts -----
   const productStatusData = [
@@ -37,7 +39,7 @@ export default function AdminDashboard() {
     { name: "Draft", value: draftProducts },
     {
       name: "Archived",
-      value: initialProducts.filter((p) => p.status === "archived").length,
+      value: products.filter((p) => p.status === "archived").length,
     },
   ];
 
@@ -241,7 +243,7 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {initialProducts.slice(0, 3).map((p) => (
+                {products.slice(0, 4).map((p) => (
                   <tr key={p.id} className="border-t border-white/10">
                     <td className="py-2 flex items-center gap-2">{p.name}</td>
                     <td className="py-2">${p.price}</td>
