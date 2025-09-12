@@ -16,6 +16,8 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import AdminAIChatWidget from "./ai-chat";
 import ColorModeSwitch from "../common/ColorModeSwitch";
+import userAtom from "@/atoms/userAtom";
+import { useAtom } from "jotai";
 
 const nav = [
   { href: "/dashboard", label: "DASHBOARD", icon: LayoutGrid, code: "ADM_000" },
@@ -38,6 +40,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userEmail, setUserEmail] = useAtom(userAtom);
 
   const logout = () => {
     localStorage.removeItem("admin-auth");
@@ -120,6 +123,9 @@ export default function AdminShell({ children }: { children: ReactNode }) {
               <div className="dark:text-white font-mono font-bold">
                 ADMIN PANEL
               </div>
+              <p className="font-mono -mt-4 text-xs lg:text-sm text-purple-600 dark:text-purple-400">
+                    {userEmail?.email || "USER_EMAIL"}
+                  </p>
             </div>
 
             <nav className="flex flex-col gap-3 mb-6">

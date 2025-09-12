@@ -4,7 +4,6 @@ import type React from "react";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Link from "next/link";
 import {
   Shield,
   Mail,
@@ -17,6 +16,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import ColorModeSwitch from "@/components/common/ColorModeSwitch";
 import { Button } from "@/components/ui/button";
+import userAtom from "@/atoms/userAtom";
+import { useAtom } from "jotai";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -25,6 +26,7 @@ export default function AdminLoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [userEmail, setUserEmail] = useAtom(userAtom);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,6 +39,7 @@ export default function AdminLoginPage() {
     if (email.toLowerCase() === "admin@glammy.com" && password === "1234") {
       localStorage.setItem("admin-auth", "true");
       setSuccess(true);
+      setUserEmail({ email: email });
       setTimeout(() => router.replace("/dashboard"), 600);
     } else {
       setError("INVALID_ADMIN_CREDENTIALS");
